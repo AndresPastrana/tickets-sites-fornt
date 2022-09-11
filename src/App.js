@@ -1,16 +1,16 @@
-import React from 'react'
+import React from "react";
+import LoginScreen from "./components/auth/LoginScreen";
+import SignUpScreen from "./components/auth/SignUpScreen";
 // import { BrowserRouter } from 'react-router-dom'
 // import AppRoutes from './routes/AppRoutes'
 
 const App = () => {
-  const backend = process.env;
   // eslint-disable-next-line no-lone-blocks
-  {console.log(backend)}
   return (
-   <div>
-   App
-   </div>
-  )
-}
+    <div>
+      <LoginScreen />
+    </div>
+  );
+};
 
-export default App
+export default App;
