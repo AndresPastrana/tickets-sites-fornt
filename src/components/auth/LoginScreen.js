@@ -6,48 +6,59 @@ import { useForm } from "../../hooks/useForm";
 import { loginRequest } from "../../helpers/loginRequest";
 
 const LoginScreen = () => {
-  const [formValues, handleInputChange] = useForm({
-    email: "",
-    name: "",
-    lastName: "",
-    phone: "",
-    password: "",
+  const [values, validate, handleInputChange, validateAll] = useForm({
+    values: { email: "", password: "" },
+    validate: { msgEmail: "", msgPassword: "" },
   });
-
-  const { email,password } = formValues;
+  const { email, password } = values;
+  const {msgEmail , msgPassword} = validate
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    console.log(formValues);
-
-    loginRequest("http://192.168.1.4:3000/auth/login", formValues)
-      .then((data) => {
-        console.log(data);
-      })
+    const isValid = validateAll();
+    if (isValid) {
+      console.log("the for is valid");
+      console.log(values);
+      // loginRequest("http://192.168.1.4:3000/auth/login", {}).then((data) => {
+      //   console.log(data);
+      // });
+    }
   };
   return (
     <div className="auth_box">
       <form onSubmit={handleOnSubmit}>
+        <div>
         <TextField
+          error = {msgEmail !==''}
           id="standard-basic"
           type="email"
           name="email"
           value={email}
-          label="Email"
+          label={msgEmail ? msgEmail: 'Email'}
           variant="standard"
           onChange={handleInputChange}
         />
+        </div>
+        <div>
         <TextField
+        error = {msgPassword !== ''}
           id="standard-basic"
           type="password"
           name="password"
           value={password}
-          label="********"
+          label={msgPassword ? msgPassword: '*************'}
           variant="standard"
           onChange={handleInputChange}
         />
-        <Button variant="contained" type="submit" endIcon={<LoginIcon /> }>
+        </div>
+        
+
+        <div>
+        <Button variant="contained" type="submit" endIcon={<LoginIcon />}>
           Login
         </Button>
+        </div>
+       
+      
       </form>
     </div>
   );
